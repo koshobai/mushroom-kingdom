@@ -2,18 +2,19 @@ import './App.css';
 import React, { useState } from 'react';
 import Title from './components/Title';
 import Modal from './components/Modal';
+import FriendList from './components/FriendList';
 
 function App() {
   let [modalState, setModalState] = useState(false);
   let [friendsState, setFriendsState] = useState(true);
-  let [e, setE] = useState([
+  let [f, setF] = useState([
     { title: 'mario bash', id: 1 },
     { title: 'bowser', id: 2 },
     { title: 'peach', id: 3 },
   ]);
 
   const hDelete = (id) => {
-    setE((currentFriends) => {
+    setF((currentFriends) => {
       return currentFriends.filter((realFriends) => {
         return id !== realFriends.id;
       });
@@ -43,18 +44,12 @@ function App() {
         <button onClick={() => setFriendsState(false)}>hide</button>
       )}
       {!friendsState && (
-        <button onClick={() => setFriendsState(true)}>show</button>
+        <button onClick={() => setFriendsState(true)}>reveal</button>
       )}
 
-      {friendsState &&
-        e.map((friend, index) => (
-          <React.Fragment key={friend.id}>
-            <h2>{friend.title}</h2>
-            <h2>{index}</h2>
-            <button onClick={() => hDelete(friend.id)}>delete</button>
-          </React.Fragment>
-        ))}
-      {<button onClick={hShow}>Show</button>}
+      {friendsState && <FriendList f={f} hDelete={hDelete} />}
+      <br />
+      {<button onClick={hShow}>Show EULA</button>}
       {modalState && (
         <Modal hCloseModalSide={hClose}>
           <h2>EULA</h2>
